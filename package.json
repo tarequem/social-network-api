@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongoose": "^6.6.1"
+  },
+  "name": "social-network-api",
+  "description": "",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tarequem/social-network-api.git"
+  },
+  "author": "Tareque Moatar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tarequem/social-network-api/issues"
+  },
+  "homepage": "https://github.com/tarequem/social-network-api#readme"
+}
