@@ -1,10 +1,15 @@
-const { User, model, Types, Schema } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 var validate = require('mongoose-validator');
 
-const ThoughtSchema = new Schema(
+const ReactionSchema = new Schema(
+    // set custom id to avoid confusion with parent comment _id
     {
-        thoughtText: {
+        reactionId: {
+            type: Schema.Types.ObjectId,
+            default: () => new Types.ObjectId()
+        },
+        reactionBody: {
             type: String,
             required: true,
             minLength: 1,
@@ -14,9 +19,13 @@ const ThoughtSchema = new Schema(
                     validator: 'isLength',
                     arguments: [1, 280],
                     message: 'Name should be between {ARGS[0]} and {ARGS[1]} characters'
-                              // On error produces: Name should be between 3 and 50 characters
+                              // On error produces: Name should be between 1 and 280 characters
                 })
             ]
+        },
+        username: {
+            type: String,
+            required: true
         },
         createdAt: {
             type: Date,
@@ -33,8 +42,35 @@ const ThoughtSchema = new Schema(
     }
 )
 
-const ReactionSchema = new Schema(
-
+const ThoughtSchema = new Schema(
+    {
+        thoughtText: {
+            type: String,
+            required: true,
+            minLength: 1,
+            maxLength: 280,
+            validator: [
+                validate ({
+                    validator: 'isLength',
+                    arguments: [1, 280],
+                    message: 'Name should be between {ARGS[0]} and {ARGS[1]} characters'
+                              // On error produces: Name should be between 1 and 280 characters
+                })
+            ]
+        },
+        createdAt: {
+            type: Date,
+            default: Date.now,
+            get: createdAtVal => dateFormat(createdAtVal)
+        }
+    },
+    {
+        toJSON: {
+            getters: true
+        },
+        // prevents virtuals from creating duplicate of _id as `id`
+        id: false
+    }
 )
 
 ThoughtSchema.virtual('reactionCount').get(function() {
