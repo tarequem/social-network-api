@@ -16,20 +16,20 @@ const UserSchema = new Schema(
                 //regex for email
                 /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
                 "Enter a valid email address",
-            ],
-            thoughts: [
-                {
-                    type: Schema.Types.ObjectId,
-                    ref: 'Thought',
-                }
-            ],
-            friends: [
-                {
-                    type: Schema.Types.ObjectId,
-                    ref: 'User',
-                },
-            ],
+            ]
         },
+        thoughts: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Thought',
+            }
+        ],
+        friends: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'User',
+            },
+        ],
     },
     {
         toJSON: {
