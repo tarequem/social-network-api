@@ -1,3 +1,4 @@
+
 const { Thought, User } = require('../models');
 
 const thoughtController = {
@@ -5,7 +6,7 @@ const thoughtController = {
     //get all thoughts 
     getAllThoughts(req, res) {
         Thought.find({})
-        .then(dbUserData => res.json(dbUserData))
+        .then(dbThoughtData => res.json(dbThoughtData))
         .catch(err => {
             console.log(err);
             res.sendStatus(400);
@@ -15,7 +16,7 @@ const thoughtController = {
     //get one thought
     getThoughtById({ params }, res) {
         Thought.findOne({ _id: params.thoughtId })
-        .then(dbUserData => res.json(dbUserData))
+        .then(dbThoughtData => res.json(dbThoughtData))
         .catch(err => {
             console.log(err);
             res.sendStatus(400);
@@ -32,12 +33,12 @@ const thoughtController = {
                 { new: true }
             );
         })
-        .then(dbUserData => {
-            if (!dbUserData) {
+        .then(dbThoughtData => {
+            if (!dbThoughtData) {
                 res.status(404).json({ message: 'User not found with this id.' });
                 return;
             }
-            res.json(dbUserData);
+            res.json(dbThoughtData);
         })
         .catch(err => res.json(err));
     },
@@ -72,7 +73,7 @@ const thoughtController = {
                 { new: true }
             );
         })
-        .then(dbUserData => res.json(dbUserData))
+        .then(dbThoughtData => res.json(dbThoughtData))
         .catch(err => res.json(err));
     },
 
@@ -101,7 +102,7 @@ const thoughtController = {
             { $pull: { reactions: { reactionId: params.reactionId } } },
             { new: true }
         )
-        .then(dbUserData => res.json(dbUserData))
+        .then(dbThoughtData => res.json(dbThoughtData))
         .catch(err => res.json(err));
     }
 };
