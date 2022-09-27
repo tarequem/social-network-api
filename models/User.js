@@ -35,16 +35,16 @@ const UserSchema = new Schema(
         toJSON: {
             virtuals: true
         },
-        // prevents virtuals from creating duplicate of _id as `id`
+        //prevents duplication of ID value
         id: false
     }
 );
+
+const User = model('User', UserSchema);
 
 //get total count of friends
 UserSchema.virtual("friendCount").get(function () {
     return this.friends.length;
 });
-
-const User = model('User', UserSchema);
 
 module.exports = User;

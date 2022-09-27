@@ -18,8 +18,8 @@ const ReactionSchema = new Schema(
                 validate ({
                     validator: 'isLength',
                     arguments: [1, 280],
-                    message: 'Name should be between {ARGS[0]} and {ARGS[1]} characters'
-                              // On error produces: Name should be between 1 and 280 characters
+                    message: 'Reaction should be between {ARGS[0]} and {ARGS[1]} characters'
+                              // On error produces: Reaction should be between 1 and 280 characters
                 })
             ]
         },
@@ -53,7 +53,7 @@ const ThoughtSchema = new Schema(
                 validate ({
                     validator: 'isLength',
                     arguments: [1, 280],
-                    message: 'Name should be between {ARGS[0]} and {ARGS[1]} characters'
+                    message: 'Thought should be between {ARGS[0]} and {ARGS[1]} characters'
                               // On error produces: Name should be between 1 and 280 characters
                 })
             ]
@@ -66,10 +66,9 @@ const ThoughtSchema = new Schema(
     },
     {
         toJSON: {
+            virtuals: true,
             getters: true
-        },
-        // prevents virtuals from creating duplicate of _id as `id`
-        id: false
+        }
     }
 )
 
