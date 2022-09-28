@@ -6,6 +6,7 @@ const thoughtController = {
     //get all thoughts 
     getAllThoughts(req, res) {
         Thought.find({})
+        .sort({ createdAt: -1 })
         .then(dbThoughtData => res.json(dbThoughtData))
         .catch(err => {
             console.log(err);
@@ -16,7 +17,13 @@ const thoughtController = {
     //get one thought
     getThoughtById({ params }, res) {
         Thought.findOne({ _id: params.thoughtId })
-        .then(dbThoughtData => res.json(dbThoughtData))
+        .then(dbThoughtData => {
+            if (!dbThoughtData) {
+                res.status(404).json({ message: 'Thought not found with this id.' });
+                return;
+            }
+            res.json(dbThoughtData);
+        })
         .catch(err => {
             console.log(err);
             res.sendStatus(400);
@@ -26,15 +33,15 @@ const thoughtController = {
     //add thought
     createThought({ body }, res) {
         Thought.create(body)
-        .then(({ _id }) => {
+        .then(({ dbThoughtData }) => {
             return User.findOneAndUpdate(
                 { _id: body.userId },
-                { $push: { thoughts: _id } },
+                { $push: { thoughts: dbThoughtData._id } },
                 { new: true }
             );
         })
-        .then(dbThoughtData => {
-            if (!dbThoughtData) {
+        .then(dbUserData => {
+            if (!dbUserData) {
                 res.status(404).json({ message: 'User not found with this id.' });
                 return;
             }
