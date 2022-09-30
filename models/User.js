@@ -21,21 +21,22 @@ const UserSchema = new Schema(
         thoughts: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'Thought',
+                ref: 'Thought'
             }
         ],
         friends: [
             {
                 type: Schema.Types.ObjectId,
-                ref: 'User',
+                ref: 'User'
             },
         ],
     },
     {
         toJSON: {
-            virtuals: true
+            virtuals: true,
+            getters: true
         },
-        // prevents virtuals from creating duplicate of _id as `id`
+        //prevents duplication of ID value
         id: false
     }
 );

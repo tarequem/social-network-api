@@ -1,13 +1,14 @@
-
-const { Thought, User } = require('../models');
+const { Thought } = require('../models');
 
 const thoughtController = {
 
     //get all thoughts 
     getAllThoughts(req, res) {
-        Thought.find({})
+        Thought.find()
         .sort({ createdAt: -1 })
-        .then(dbThoughtData => res.json(dbThoughtData))
+        .then((dbThoughtData) => {
+            res.json(dbThoughtData);
+        })
         .catch(err => {
             console.log(err);
             res.sendStatus(400);
@@ -31,11 +32,11 @@ const thoughtController = {
     },
 
     //add thought
-    createThought({ body }, res) {
-        Thought.create(body)
+    createThought(req, res) {
+        Thought.create(req.body)
         .then(({ dbThoughtData }) => {
             return User.findOneAndUpdate(
-                { _id: body.userId },
+                { _id: req.body.userId },
                 { $push: { thoughts: dbThoughtData._id } },
                 { new: true }
             );
@@ -45,24 +46,24 @@ const thoughtController = {
                 res.status(404).json({ message: 'User not found with this id.' });
                 return;
             }
-            res.json(dbThoughtData);
+            res.json(dbUserData);
         })
         .catch(err => res.json(err));
     },
 
     //updates thought
     updateThought({ params, body}, res) {
-        Thought.findByIdAndUpdate(
+        Thought.findOneAndUpdate(
             { _id: params.thoughtId },
             body,
             { new: true, runValidators: true }
         )
-        .then(updatedThought => {
-            if (!updatedThought) {
+        .then(dbThoughtData => {
+            if (!dbThoughtData) {
                 res.status(404).json({ message: 'Thought not found with this id.' });
                 return;
             }
-            res.json(updatedThought);
+            res.json(dbThoughtData);
         })
         .catch(err => res.json(err));
     },
