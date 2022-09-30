@@ -20,7 +20,7 @@ const thoughtController = {
         Thought.findOne({ _id: params.thoughtId })
         .then(dbThoughtData => {
             if (!dbThoughtData) {
-                res.status(404).json({ message: 'Thought not found with this id.' });
+                res.status(404).json({ message: "Thought not found with this id." });
                 return;
             }
             res.json(dbThoughtData);
@@ -43,10 +43,10 @@ const thoughtController = {
         })
         .then(dbUserData => {
             if (!dbUserData) {
-                res.status(404).json({ message: 'User not found with this id.' });
+                res.status(404).json({ message: "User not found with this id." });
                 return;
             }
-            res.json(dbUserData);
+            res.json({dbUserData});
         })
         .catch(err => res.json(err));
     },
@@ -60,7 +60,7 @@ const thoughtController = {
         )
         .then(dbThoughtData => {
             if (!dbThoughtData) {
-                res.status(404).json({ message: 'Thought not found with this id.' });
+                res.status(404).json({ message: "Thought not found with this id." });
                 return;
             }
             res.json(dbThoughtData);
@@ -73,7 +73,7 @@ const thoughtController = {
         Thought.findOneAndDelete({ _id: params.thoughtId })
         .then(deletedThought => {
             if (!deletedThought) {
-                return res.status(404).json({ message: 'Thought not found with this id.' });
+                return res.status(404).json({ message: "Thought not found with this id." });
             }
             return User.findOneAndUpdate(
                 { _id: params.userId },
@@ -95,7 +95,7 @@ const thoughtController = {
         )
         .then(dbThoughtData => {
             if (!dbThoughtData) {
-                res.status(404).json({ message: 'Thought not found with this id.' });
+                res.status(404).json({ message: "Thought not found with this id." });
                 return;
             }
             res.json(dbThoughtData);
