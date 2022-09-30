@@ -1,4 +1,4 @@
-const { Thought } = require('../models');
+const { Thought, User } = require('../models');
 
 const thoughtController = {
 
@@ -20,7 +20,7 @@ const thoughtController = {
         Thought.findOne({ _id: params.thoughtId })
         .then(dbThoughtData => {
             if (!dbThoughtData) {
-                res.status(404).json({ message: "Thought not found with this id." });
+                res.status(404).json({ message: 'Thought not found with this id.' });
                 return;
             }
             res.json(dbThoughtData);
@@ -37,13 +37,13 @@ const thoughtController = {
         .then(({ dbThoughtData }) => {
             return User.findOneAndUpdate(
                 { _id: req.body.userId },
-                { $push: { thoughts: dbThoughtData._id } },
+                { $push: { thoughts: _id } },
                 { new: true }
             );
         })
         .then(dbUserData => {
             if (!dbUserData) {
-                res.status(404).json({ message: "User not found with this id." });
+                res.status(404).json({ message: 'User not found with this id.' });
                 return;
             }
             res.json({dbUserData});
@@ -60,7 +60,7 @@ const thoughtController = {
         )
         .then(dbThoughtData => {
             if (!dbThoughtData) {
-                res.status(404).json({ message: "Thought not found with this id." });
+                res.status(404).json({ message: 'Thought not found with this id.' });
                 return;
             }
             res.json(dbThoughtData);
@@ -73,7 +73,7 @@ const thoughtController = {
         Thought.findOneAndDelete({ _id: params.thoughtId })
         .then(deletedThought => {
             if (!deletedThought) {
-                return res.status(404).json({ message: "Thought not found with this id." });
+                return res.status(404).json({ message: 'Thought not found with this id.' });
             }
             return User.findOneAndUpdate(
                 { _id: params.userId },
@@ -95,7 +95,7 @@ const thoughtController = {
         )
         .then(dbThoughtData => {
             if (!dbThoughtData) {
-                res.status(404).json({ message: "Thought not found with this id." });
+                res.status(404).json({ message: 'Thought not found with this id.' });
                 return;
             }
             res.json(dbThoughtData);
