@@ -5,8 +5,6 @@
 
 [Installation](#installation)
 
-[Usage](#usage)
-
 [Contribution](#contributors)
 
 [Testing](#test)
